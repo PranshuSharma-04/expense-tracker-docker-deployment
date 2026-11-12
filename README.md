@@ -21,7 +21,27 @@ The application uses Java Spring Boot for the backend and MySQL for database man
 The application runs using two Docker containers:
 
 1. **Spring Boot Application** – Runs the Expense Tracker web application on port 8080.
+
 2. **MySQL Database** – Stores application data in the `expenses_tracker` database.
+
+Both containers communicate through a custom Docker network named `appbridge`.
+
+### Architecture Diagram
+
+```mermaid
+flowchart TD
+    A["User / Browser"] -->|"HTTP :8080"| B["AWS EC2 - Ubuntu"]
+
+    subgraph C["Docker Compose"]
+        subgraph N["appbridge Network"]
+            D["Spring Boot Application<br/>Expensetracker<br/>Port 8080"]
+            E[("MySQL Database<br/>expenses_tracker")]
+            D <-->|"JDBC Connection :3306"| E
+        end
+        E --- F[("Persistent Storage<br/>mysql-data")]
+    end
+
+    B --> D
 
 Both containers communicate through a custom Docker network named `appbridge`.
 
