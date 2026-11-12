@@ -42,8 +42,7 @@ flowchart TD
     end
 
     B --> D
-
-Both containers communicate through a custom Docker network named `appbridge`.
+```
 
 ## My Contributions
 
